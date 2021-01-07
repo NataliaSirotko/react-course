@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person.js';
+import React from 'react';
+import './index.css';
+import Card from './Card';
+import Header from './Header';
 
 function App() {
   return (
     <div className="App">
-      <h1>React App</h1>
-      <p>This is really working</p>
-      <Person name="Max" age="28" />
-      <Person name="Manu" age="29" >My hobbies: Racing</Person>
-      <Person name="Stepha" age="26" />
+      <Header></Header>
+      <Card className="block" caption="Caption" text="Text..."></Card>
+      <Card className="block" caption="Caption" text="Text..."></Card>
     </div>
   );
 }
