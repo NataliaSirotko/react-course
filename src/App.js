@@ -1,9 +1,14 @@
-import './App.css';
+import React from 'react';
+import './index.css';
+import Card from './Card';
+import Header from './Header';
 
 function App() {
   return (
     <div className="App">
-      <h1>React App</h1>
+      <Header></Header>
+      <Card className="block" caption="Caption" text="Text..."></Card>
+      <Card className="block" caption="Caption" text="Text..."></Card>
     </div>
   );
 }
