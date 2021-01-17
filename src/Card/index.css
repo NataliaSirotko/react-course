@@ -11,3 +11,11 @@
     padding-bottom: 10px;
     border-bottom: 1px solid red;
   }
+  input {
+    float: right;
+  }
+  .card-checked {
+    border: none;
+    border-radius: 5px;
+    background-color: pink;
+  }
