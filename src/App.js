@@ -10,7 +10,8 @@ function App() {
 
   function checkboxChange(event) {
     setCardState({
-      caption: 'Caption', text: 'Text...', checked: !cardState.checked
+      ...cardState,
+      checked: !cardState.checked
     });
   }
 

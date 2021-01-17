@@ -14,7 +14,7 @@
   input {
     float: right;
   }
-  .card.border {
+  .card-checked {
     border: none;
     border-radius: 5px;
     background-color: pink;
