@@ -41,7 +41,8 @@ function App() {
   function cancelEditing() {
     setCardState({
       caption: 'Caption', text: 'Text...',
-      edited: !cardState.edited
+      edited: !cardState.edited,
+      checked: (cardState.checked ? !cardState.checked : cardState.checked)
     });
   }
 
