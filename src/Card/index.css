@@ -20,12 +20,6 @@
     border-radius: 5px;
     background-color: pink;
   }
-  .non-active {
-    display: none;
-  }
-  .active {
-    display: block;
-  }
   .iconBox span {
     float: left;
     cursor: pointer;

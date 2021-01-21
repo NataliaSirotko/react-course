@@ -5,31 +5,29 @@ import { IoIosSave } from 'react-icons/io';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
 
-const Card = ({caption, text, checked, checkboxChange, edited, edit, capEdit, textEdit, cancel}) => {
+const Card = (props) => {
+
     let cardClass = classNames('card', {
-        'card-checked': checked
+        'card-checked': props.checked
     });
-    let elemsClass = classNames({
-       'active': !edited,
-       'non-active': edited
-    });
-    let elemsEditedClass = classNames({
-        'active': edited,
-        'non-active': !edited
-     });
 
     return <div className={cardClass}>
-        <p><span className={elemsClass}>{caption}</span>
-            <input className={elemsEditedClass} type="text" onChange={capEdit} value={caption} />
+        <p>
+            { props.edited
+            ? <input  type="text" onChange={(event) =>props.onTextEdit(event, 'caption')} value={props.cachedCaption} />
+            : <span >{props.caption}</span> }
             <span className="iconBox">
-                <span className={elemsClass} onClick={edit}><AiOutlineEdit /></span>
-                <input className={elemsClass} type="checkbox" checked={checked} onChange={checkboxChange} />
-                <span className={elemsEditedClass} onClick={edit}><IoIosSave /></span>
-                <span className={elemsEditedClass} onClick={cancel}><MdCancel /></span>
+                { props.edited
+                ? <span onClick={props.onSave}><IoIosSave /></span>
+                : <span onClick={props.onCardEdit}><AiOutlineEdit /></span> }
+                { props.edited
+                ? <span onClick={props.onCancel}><MdCancel /></span>
+                : <input type="checkbox" checked={props.checked} onChange={props.onCheckboxChange} /> }
             </span>
         </p>
-        <p className={elemsClass}>{text}</p>
-        <textarea className={elemsEditedClass} onChange={textEdit} value={text}></textarea>
+        { props.edited
+        ? <textarea onChange={(event) => props.onTextEdit(event, 'text')} value={props.cachedText}></textarea>
+        : <p>{props.text}</p> }
     </div>
 };
 
