@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import classNames from 'classnames';
 import { IoIosSave } from 'react-icons/io';
@@ -8,27 +8,69 @@ import { MdCancel } from 'react-icons/md';
 const Card = (props) => {
 
     let cardClass = classNames('card', {
-        'card-checked': props.checked
+        'card-checked': props.data.checked
     });
 
-    return <div className={cardClass}>
-        <p>
-            { props.edited
-            ? <input  type="text" onChange={(event) =>props.onTextEdit(event, 'caption')} value={props.cachedCaption} />
-            : <span >{props.caption}</span> }
-            <span className="iconBox">
-                { props.edited
-                ? <span onClick={props.onSave}><IoIosSave /></span>
-                : <span onClick={props.onCardEdit}><AiOutlineEdit /></span> }
-                { props.edited
-                ? <span onClick={props.onCancel}><MdCancel /></span>
-                : <input type="checkbox" checked={props.checked} onChange={props.onCheckboxChange} /> }
-            </span>
-        </p>
-        { props.edited
-        ? <textarea onChange={(event) => props.onTextEdit(event, 'text')} value={props.cachedText}></textarea>
-        : <p>{props.text}</p> }
-    </div>
+    const [cachedState, setCachedState] = useState({
+        cachedCard: {}
+    });
+
+    function editing() {
+      props.onEditMode();
+      setCachedState({
+        cachedCard: {
+          ...props.data
+        }
+      });
+    }
+
+    function changeHandler(event, property) {
+      setCachedState({
+        cachedCard: {
+          ...cachedState.cachedCard, [property]: event.target.value
+        }
+      });
+    }
+
+    function saveEditing() {
+      props.onSave(cachedState.cachedCard.caption, cachedState.cachedCard.text);
+    }
+
+    function cancelEditing() {
+      props.onCancel();
+      setCachedState({
+        cachedCard: {
+          ...props.data
+        }
+      });
+    }
+
+    const editMode = (
+        <div className={cardClass}>
+            <p>
+                <input  type="text" onChange={(event) =>changeHandler(event, 'caption')} value={cachedState.cachedCard.caption} />
+                <span className="iconBox">
+                    <span onClick={saveEditing}><IoIosSave /></span>
+                    <span onClick={cancelEditing}><MdCancel /></span>
+                </span>
+            </p>
+            <textarea onChange={(event) => changeHandler(event, 'text')} value={cachedState.cachedCard.text}></textarea>
+        </div>
+    );
+    const defaultMode = (
+        <div className={cardClass}>
+            <p>
+                <span >{props.data.caption}</span>
+                <span className="iconBox">
+                    <span onClick={editing}><AiOutlineEdit /></span>
+                    <input type="checkbox" checked={props.data.checked} onChange={props.onCheckboxChange} />
+                </span>
+            </p>
+            <p>{props.data.text}</p>
+        </div>
+    );
+
+    return props.edited ? editMode : defaultMode;
 };
 
 export default Card;

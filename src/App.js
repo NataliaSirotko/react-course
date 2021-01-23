@@ -9,13 +9,9 @@ function App() {
     card: {
         caption: 'Caption',
         text: 'Text...',
-        checked: false,
-        edited: false
-      },
-    cachedCard: {
-      caption: '',
-      text: ''
-    }
+        checked: false
+    },
+    edited: false
   });
 
   function checkboxChange() {
@@ -23,62 +19,47 @@ function App() {
       ...cardState,
       card: {
         ...cardState.card,
-        checked: !cardState.card.checked}
+        checked: !cardState.card.checked
+      }
     });
   }
 
-  function editCard() {
+  function editMode() {
     setCardState({
       card: {
         ...cardState.card,
-        edited: true,
-        checked: false,
+        checked: false
       },
-      cachedCard: {
-        caption: cardState.card.caption,
-        text: cardState.card.text
-      }
+      edited: true
     });
   }
 
-  function changeHandler(event, property) {
+  function saveEditing(x, y) {
     setCardState({
-      ...cardState,
-      cachedCard: {
-        ...cardState.cachedCard, [property]: event.target.value
-      }
-    });
-  }
-
-  function saveEditing() {
-    setCardState({
-      ...cardState,
       card: {
         ...cardState.card,
-        edited: false,
-      caption: cardState.cachedCard.caption,
-      text: cardState.cachedCard.text
-      }
-    })
+        caption: x,
+        text: y
+      },
+      edited: false
+    });
   }
 
   function cancelEditing() {
     setCardState({
       ...cardState,
-      card: {
-        ...cardState.card,
-        edited: false
-      }
+      edited: false
     });
   }
 
   return (
     <div className="App">
       <Header></Header>
-      <Card className="block" caption={cardState.card.caption} text={cardState.card.text} checked={cardState.card.checked} edited={cardState.card.edited}
-          cachedCaption={cardState.cachedCard.caption} cachedText={cardState.cachedCard.text}
-          onCheckboxChange={checkboxChange} onCardEdit={editCard} onTextEdit={changeHandler} onSave={saveEditing} onCancel={cancelEditing}></Card>
-      <Card className="block" caption="Cap" text="Text..."></Card>
+      <Card className="block" data={cardState.card} edited={cardState.edited}
+        onCheckboxChange={checkboxChange}
+        onEditMode={editMode}
+        onSave={saveEditing}
+        onCancel={cancelEditing}></Card>
     </div>
   );
 }
