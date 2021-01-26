@@ -4,22 +4,62 @@ import Card from './Card';
 import Header from './Header';
 
 function App() {
+
   const [ cardState, setCardState ] = useState({
-      caption: 'Caption', text: 'Text...', checked: false
+    card: {
+        caption: 'Caption',
+        text: 'Text...',
+        checked: false
+    },
+    edited: false
   });
 
-  function checkboxChange(event) {
+  function checkboxChange() {
     setCardState({
       ...cardState,
-      checked: !cardState.checked
+      card: {
+        ...cardState.card,
+        checked: !cardState.card.checked
+      }
+    });
+  }
+
+  function editMode() {
+    setCardState({
+      card: {
+        ...cardState.card,
+        checked: false
+      },
+      edited: true
+    });
+  }
+
+  function saveEditing(x, y) {
+    setCardState({
+      card: {
+        ...cardState.card,
+        caption: x,
+        text: y
+      },
+      edited: false
+    });
+  }
+
+  function cancelEditing() {
+    setCardState({
+      ...cardState,
+      edited: false
     });
   }
 
   return (
     <div className="App">
       <Header></Header>
-      <Card className="block" caption={cardState.caption} text={cardState.text} checked={cardState.checked} checkboxChange={checkboxChange}></Card>
-      <Card className="block" caption="Cap" text="Text..."></Card>
+      <Card className="block" data={cardState.card} edited={cardState.edited}
+        onCheckboxChange={checkboxChange}
+        onEditMode={editMode}
+        onSave={saveEditing}
+        onCancel={cancelEditing}></Card>
     </div>
   );
 }
