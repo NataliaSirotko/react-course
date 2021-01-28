@@ -34,12 +34,11 @@ function App() {
     });
   }
 
-  function saveEditing(x, y) {
+  function saveEditing(arr) {
     setCardState({
       card: {
-        ...cardState.card,
-        caption: x,
-        text: y
+        ...arr,
+        checked: false
       },
       edited: false
     });

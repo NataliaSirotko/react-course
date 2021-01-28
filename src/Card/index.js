@@ -33,7 +33,7 @@ const Card = (props) => {
     }
 
     function saveEditing() {
-      props.onSave(cachedState.cachedCard.caption, cachedState.cachedCard.text);
+      props.onSave(cachedState.cachedCard);
     }
 
     function cancelEditing() {
