@@ -16,7 +16,7 @@ const Card = (props) => {
     });
 
     function editing() {
-      props.onEditMode();
+      props.onEditMode(props.data.id);
       setCachedState({
         cachedCard: {
           ...props.data
@@ -33,15 +33,16 @@ const Card = (props) => {
     }
 
     function saveEditing() {
-      props.onSave(cachedState.cachedCard);
+      props.onSave(cachedState.cachedCard, props.data.id);
+      setCachedState({
+        cachedCard: {}
+      });
     }
 
     function cancelEditing() {
-      props.onCancel();
+      props.onCancel(props.data.id);
       setCachedState({
-        cachedCard: {
-          ...props.data
-        }
+        cachedCard: {}
       });
     }
 
@@ -62,15 +63,15 @@ const Card = (props) => {
             <p>
                 <span >{props.data.caption}</span>
                 <span className="iconBox">
-                    <span onClick={editing}><AiOutlineEdit /></span>
-                    <input type="checkbox" checked={props.data.checked} onChange={props.onCheckboxChange} />
+                    {props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>}
+                    <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />
                 </span>
             </p>
             <p>{props.data.text}</p>
         </div>
     );
 
-    return props.edited ? editMode : defaultMode;
+    return props.data.edited ? editMode : defaultMode;
 };
 
 export default Card;
