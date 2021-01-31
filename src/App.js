@@ -135,8 +135,8 @@ function App() {
       return c.edited = false;
     });
     setCardState({
-      checked: !cardState.checked,
-      cards: cardState.cards
+      ...cardState,
+      checked: !cardState.checked
     });
   }
 
