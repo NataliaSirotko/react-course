@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import CardList from '../components/Cardlist/Cardlist';
+import CardList from '../components/Cardlist';
 import Header from '../components/Header';
 import styled from 'styled-components';
 
@@ -189,7 +189,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header></Header>
+      <Header />
       <main>
         <label>Только просмотр
           <Checkbox type="checkbox" checked={cardState.checked} onChange={mainChecked}  />
