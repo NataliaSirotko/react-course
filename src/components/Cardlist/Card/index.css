@@ -23,12 +23,3 @@
     float: left;
     cursor: pointer;
   }
-  textarea {
-    width: 100%;
-    height: 50%;
-  }
-.cardblock {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}

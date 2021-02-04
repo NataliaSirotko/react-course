@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import Card from './Card';
-import Header from './Header';
+import CardList from '../components/Cardlist/Cardlist';
+import Header from '../components/Header';
 import styled from 'styled-components';
+
 
 const Checkbox = styled.input`
   -webkit-appearance: none;
@@ -176,6 +177,16 @@ function App() {
     });
   }
 
+  function deleteCards() {
+    const cardsNew = cardState.cards.filter(c => {
+      return !c.checked;
+    });
+    setCardState({
+      ...cardState,
+      cards: cardsNew
+    });
+  }
+
   return (
     <div className="App">
       <Header></Header>
@@ -184,15 +195,15 @@ function App() {
           <Checkbox type="checkbox" checked={cardState.checked} onChange={mainChecked}  />
         </label>
         <div className="cardblock">
-          {cardState.cards.map(card => {
-            return <Card
-              data={card} key={card.id} checkboxMain={cardState.checked}
-              onCheckboxChange={checkboxChange}
-              onEditMode={editMode}
-              onSave={saveEditing}
-              onCancel={cancelEditing} />
-          })}
+          <CardList
+          cards={cardState.cards}
+          checkboxMain={cardState.checked}
+          onCheckboxChange={checkboxChange}
+          onEditMode={editMode}
+          onSave={saveEditing}
+          onCancel={cancelEditing} />
         </div>
+        <button type="text" onClick={deleteCards}>Удалить выбранные карточки</button>
       </main>
     </div>
   );
