@@ -10,4 +10,4 @@ const cardList = (props) => props.cards.map(card => {
           onCancel={props.onCancel} />
       });
 
-export default cardList;
+export default React.memo(cardList);

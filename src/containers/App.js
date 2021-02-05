@@ -187,6 +187,21 @@ function App() {
     });
   }
 
+  function addCard() {
+    const cardNew = {
+      id: cardState.cards[cardState.cards.length-1].id + 1,
+      caption: '',
+      text: '',
+      checked: false,
+      edited: false
+    };
+
+    setCardState({
+      ...cardState,
+      cards: cardState.cards.concat(cardNew)
+    });
+  }
+
   return (
     <div className="App">
       <Header />
@@ -204,6 +219,7 @@ function App() {
           onCancel={cancelEditing} />
         </div>
         <button type="text" onClick={deleteCards}>Удалить выбранные карточки</button>
+        <button type="text" onClick={addCard}>Создать карточку</button>
       </main>
     </div>
   );
