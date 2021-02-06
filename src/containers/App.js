@@ -3,7 +3,7 @@ import './App.css';
 import CardList from '../components/Cardlist';
 import Header from '../components/Header';
 import styled from 'styled-components';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const Checkbox = styled.input`
   -webkit-appearance: none;
@@ -189,7 +189,7 @@ function App() {
 
   function addCard() {
     const cardNew = {
-      id: cardState.cards[cardState.cards.length-1].id + 1,
+      id: uuidv4(),
       caption: '',
       text: '',
       checked: false,
