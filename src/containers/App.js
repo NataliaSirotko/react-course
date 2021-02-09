@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import CardList from '../components/Cardlist/Cardlist';
+import CardList from '../components/Cardlist';
 import Header from '../components/Header';
 import styled from 'styled-components';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const Checkbox = styled.input`
   -webkit-appearance: none;
@@ -187,9 +187,24 @@ function App() {
     });
   }
 
+  function addCard() {
+    const cardNew = {
+      id: uuidv4(),
+      caption: '',
+      text: '',
+      checked: false,
+      edited: false
+    };
+
+    setCardState({
+      ...cardState,
+      cards: cardState.cards.concat(cardNew)
+    });
+  }
+
   return (
     <div className="App">
-      <Header></Header>
+      <Header />
       <main>
         <label>Только просмотр
           <Checkbox type="checkbox" checked={cardState.checked} onChange={mainChecked}  />
@@ -204,6 +219,7 @@ function App() {
           onCancel={cancelEditing} />
         </div>
         <button type="text" onClick={deleteCards}>Удалить выбранные карточки</button>
+        <button type="text" onClick={addCard}>Создать карточку</button>
       </main>
     </div>
   );
