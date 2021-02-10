@@ -6,6 +6,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
 import CardHeader from './Cardheader';
 import CardBody from './Cardbody';
+import WithLoadingDelay from '../../../hoc/WithLoadingDelay';
 
 const Card = (props) => {
 
@@ -49,26 +50,27 @@ const Card = (props) => {
     }
 
     return (
-      <div className={cardClass}>
-          <p>
-            <CardHeader
-              value={cachedState.cachedCard.caption}
-              handler={changeHandler}
-              caption={props.data.caption}
-              edit={props.data.edited} />
-            <span className="iconBox">
-              {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
-              : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
-              {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
-              : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
-            </span>
-          </p>
-          <CardBody
-            value={cachedState.cachedCard.text}
+      <WithLoadingDelay classes={cardClass}>
+        <p>
+          <CardHeader
+            value={cachedState.cachedCard.caption}
             handler={changeHandler}
-            text={props.data.text}
-            edit={props.data.edited} />
-      </div>
+            caption={props.data.caption}
+            edit={props.data.edited}
+            />
+          <span className="iconBox">
+            {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
+            : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
+            {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
+            : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
+          </span>
+        </p>
+        <CardBody
+          value={cachedState.cachedCard.text}
+          handler={changeHandler}
+          text={props.data.text}
+          edit={props.data.edited} />
+      </WithLoadingDelay>
     );
 };
 
