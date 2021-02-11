@@ -6,7 +6,9 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
 import CardHeader from './Cardheader';
 import CardBody from './Cardbody';
-import WithLoadingDelay from '../../../hoc/WithLoadingDelay';
+
+import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import Aux from '../../../hoc/Auxiliary';
 
 const Card = (props) => {
 
@@ -50,7 +52,8 @@ const Card = (props) => {
     }
 
     return (
-      <WithLoadingDelay classes={cardClass}>
+      <Aux>
+        <div className={cardClass}>
         <p>
           <CardHeader
             value={cachedState.cachedCard.caption}
@@ -70,8 +73,9 @@ const Card = (props) => {
           handler={changeHandler}
           text={props.data.text}
           edit={props.data.edited} />
-      </WithLoadingDelay>
+        </div>
+      </Aux>
     );
 };
 
-export default Card;
+export default withLoadingDelay(Card);
