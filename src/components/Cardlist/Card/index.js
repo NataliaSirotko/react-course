@@ -7,6 +7,9 @@ import { MdCancel } from 'react-icons/md';
 import CardHeader from './Cardheader';
 import CardBody from './Cardbody';
 
+import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import Aux from '../../../hoc/Auxiliary';
+
 const Card = (props) => {
 
     let cardClass = classNames('card', {
@@ -49,27 +52,30 @@ const Card = (props) => {
     }
 
     return (
-      <div className={cardClass}>
-          <p>
-            <CardHeader
-              value={cachedState.cachedCard.caption}
-              handler={changeHandler}
-              caption={props.data.caption}
-              edit={props.data.edited} />
-            <span className="iconBox">
-              {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
-              : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
-              {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
-              : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
-            </span>
-          </p>
-          <CardBody
-            value={cachedState.cachedCard.text}
+      <Aux>
+        <div className={cardClass}>
+        <p>
+          <CardHeader
+            value={cachedState.cachedCard.caption}
             handler={changeHandler}
-            text={props.data.text}
-            edit={props.data.edited} />
-      </div>
+            caption={props.data.caption}
+            edit={props.data.edited}
+            />
+          <span className="iconBox">
+            {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
+            : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
+            {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
+            : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
+          </span>
+        </p>
+        <CardBody
+          value={cachedState.cachedCard.text}
+          handler={changeHandler}
+          text={props.data.text}
+          edit={props.data.edited} />
+        </div>
+      </Aux>
     );
 };
 
-export default Card;
+export default withLoadingDelay(Card);
