@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const CardContext  = React.createContext();
 
-export const Provider = (props) => {
+const Provider = (props) => {
   const [cardState, setCardState] = useState([
     {
       id: 1,
@@ -94,7 +94,7 @@ export const Provider = (props) => {
       return c.id === id;
     });
     const card = arr;
-    card.checked = false;
+    card.edited = false;
 
     const cards = [...cardState];
     cards[cardIndex] = card;

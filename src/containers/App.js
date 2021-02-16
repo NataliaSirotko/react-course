@@ -46,21 +46,6 @@ function App() {
   });
 
   const {cardState, addCard, deleteCards} = useContext(CardContext);
-  // function saveEditing(arr, id) {
-  //   const cardIndex= cardState.cards.findIndex(c => {
-  //     return c.id === id;
-  //   });
-  //   const card = {...arr};
-  //   card.checked = false;
-
-  //   const cards = [...cardState.cards];
-  //   cards[cardIndex] = card;
-
-  //   setCardState({
-  //     ...cardState,
-  //     cards: cards
-  //   });
-  // }
 
   function mainChecked() {
     cardState.forEach(c => {
