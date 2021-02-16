@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './index.css';
 import classNames from 'classnames';
 import { IoIosSave } from 'react-icons/io';
@@ -76,6 +77,11 @@ const Card = (props) => {
         </div>
       </Aux>
     );
+};
+
+Card.propTypes = {
+  checkboxMain: PropTypes.bool,
+  data: PropTypes.object
 };
 
 export default withLoadingDelay(Card);
