@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import CardList from '../components/Cardlist';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
+import { CardContext } from '../context/Card-context';
 
 const Checkbox = styled.input`
   -webkit-appearance: none;
@@ -41,164 +41,18 @@ const Checkbox = styled.input`
   `;
 
 function App() {
-  const [ cardState, setCardState ] = useState({
-    cards: [
-      {
-        id: 1,
-        caption: 'One',
-        text: 'first.',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 2,
-        caption: 'Two',
-        text: 'second',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 3,
-        caption: 'Three',
-        text: 'third',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 4,
-        caption: 'Four',
-        text: 'fourth',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 5,
-        caption: 'Five',
-        text: 'Fifth',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 6,
-        caption: 'Six',
-        text: 'sixth',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 7,
-        caption: 'Seven',
-        text: 'seventh',
-        checked: false,
-        edited: false
-      },
-      {
-        id: 8,
-        caption: 'Caption',
-        text: 'Text...',
-        checked: false,
-        edited: false
-      }
-    ],
+  const [ state, setState ] = useState({
     checked: false
   });
 
-  function checkboxChange(id) {
-    const cardIndex = cardState.cards.findIndex(c => {
-      return c.id === id;
-    });
-
-    const card = {...cardState.cards[cardIndex]};
-    card.checked = !card.checked;
-
-    const cards = [...cardState.cards];
-    cards[cardIndex] = card;
-    setCardState({
-      ...cardState,
-      cards: cards
-    });
-  }
-
-  function editMode(id) {
-    const cardIndex= cardState.cards.findIndex(c => {
-      return c.id === id;
-    });
-    const card = {...cardState.cards[cardIndex]};
-    card.checked = false;
-    card.edited = true;
-
-    const cards = [...cardState.cards];
-    cards[cardIndex] = card;
-    setCardState({
-      ...cardState,
-      cards: cards
-    });
-  }
-
-  function saveEditing(arr, id) {
-    const cardIndex= cardState.cards.findIndex(c => {
-      return c.id === id;
-    });
-    const card = {...arr};
-    card.checked = false;
-
-    const cards = [...cardState.cards];
-    cards[cardIndex] = card;
-
-    setCardState({
-      ...cardState,
-      cards: cards
-    });
-  }
-
-  function cancelEditing(id) {
-    const cardIndex = cardState.cards.findIndex(c => {
-      return c.id === id;
-    });
-    const card = {...cardState.cards[cardIndex]};
-    card.edited = false;
-
-    const cards = [...cardState.cards];
-    cards[cardIndex] = card;
-
-    setCardState({
-      ...cardState,
-      cards: cards
-    });
-  }
+  const {cardState, addCard, deleteCards} = useContext(CardContext);
 
   function mainChecked() {
-    cardState.cards.forEach(c => {
+    cardState.forEach(c => {
       return c.edited = false;
     });
-    setCardState({
-      ...cardState,
-      checked: !cardState.checked
-    });
-  }
-
-  function deleteCards() {
-    const cardsNew = cardState.cards.filter(c => {
-      return !c.checked;
-    });
-    setCardState({
-      ...cardState,
-      cards: cardsNew
-    });
-  }
-
-  function addCard() {
-    const cardNew = {
-      id: uuidv4(),
-      caption: '',
-      text: '',
-      checked: false,
-      edited: false
-    };
-
-    setCardState({
-      ...cardState,
-      cards: cardState.cards.concat(cardNew)
+    setState({
+      checked: !state.checked
     });
   }
 
@@ -207,16 +61,12 @@ function App() {
       <Header />
       <main>
         <label>Только просмотр
-          <Checkbox type="checkbox" checked={cardState.checked} onChange={mainChecked}  />
+          <Checkbox type="checkbox" checked={state.checked} onChange={mainChecked}  />
         </label>
         <div className="cardblock">
           <CardList
-          cards={cardState.cards}
-          checkboxMain={cardState.checked}
-          onCheckboxChange={checkboxChange}
-          onEditMode={editMode}
-          onSave={saveEditing}
-          onCancel={cancelEditing} />
+           checkboxMain={state.checked}
+           />
         </div>
         <button type="text" onClick={deleteCards}>Удалить выбранные карточки</button>
         <button type="text" onClick={addCard}>Создать карточку</button>

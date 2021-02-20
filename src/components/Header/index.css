@@ -2,3 +2,18 @@
     text-align: center;
     border: 2px solid blue;
 }
+
+.header button {
+    background-color: pink;
+    letter-spacing: 1px;
+    position: relative;
+    left: 400px;
+}
+
+span.badge {
+    background-color: white;
+    color: black;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}

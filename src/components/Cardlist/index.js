@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Card from './Card';
+import  { CardContext } from '../../context/Card-context';
 
-const cardList = (props) => props.cards.map(card => {
-        return <Card
+const CardList = (props) => {
+  const {cardState, checkboxChange, editMode, saveEditing, cancelEditing} = useContext(CardContext);
+
+return cardState.map(card => {
+      return (
+        <Card
           data={card} key={card.id} checkboxMain={props.checkboxMain}
-          onCheckboxChange={props.onCheckboxChange}
-          onEditMode={props.onEditMode}
-          onSave={props.onSave}
-          onCancel={props.onCancel} />
+          onCheckboxChange={checkboxChange}
+          onEditMode={editMode}
+          onSave={saveEditing}
+          onCancel={cancelEditing}
+           />
+          )
       });
+};
 
-export default React.memo(cardList);
+export default React.memo(CardList);
