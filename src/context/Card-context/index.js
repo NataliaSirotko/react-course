@@ -64,9 +64,7 @@ const Provider = (props) => {
   ]);
 
   function checkboxChange(id) {
-    const cardIndex = cardState.findIndex(c => {
-      return c.id === id;
-    });
+    const cardIndex = cardState.findIndex(c => c.id === id);
 
     const card = cardState[cardIndex];
     card.checked = !card.checked;
@@ -77,9 +75,7 @@ const Provider = (props) => {
   }
 
   function editMode(id) {
-    const cardIndex= cardState.findIndex(c => {
-      return c.id === id;
-    });
+    const cardIndex= cardState.findIndex(c => c.id === id);
     const card = cardState[cardIndex];
     card.checked = false;
     card.edited = true;
@@ -90,9 +86,7 @@ const Provider = (props) => {
   }
 
   function saveEditing(arr, id) {
-    const cardIndex= cardState.findIndex(c => {
-      return c.id === id;
-    });
+    const cardIndex= cardState.findIndex(c =>c.id === id);
     const card = arr;
     card.edited = false;
 
@@ -102,9 +96,7 @@ const Provider = (props) => {
   }
 
   function cancelEditing(id) {
-    const cardIndex = cardState.findIndex(c => {
-      return c.id === id;
-    });
+    const cardIndex = cardState.findIndex(c => c.id === id);
     const card = cardState[cardIndex];
     card.edited = false;
 
@@ -114,9 +106,7 @@ const Provider = (props) => {
   }
 
   function deleteCards() {
-    const cardsNew = cardState.filter(c => {
-      return !c.checked;
-    });
+    const cardsNew = cardState.filter(c => !c.checked);
     setCardState(cardsNew);
   }
 
