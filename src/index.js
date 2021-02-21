@@ -4,6 +4,21 @@ import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import Provider from './context/Card-context';
+import axios from 'axios';
+
+axios.interceptors.request.use(request => request,
+  error => {
+    console.log(error);
+    Promise.reject(error)
+  }
+);
+
+axios.interceptors.request.use(response => response,
+  error => {
+    console.log(error);
+    Promise.reject(error)
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

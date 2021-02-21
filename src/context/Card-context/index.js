@@ -1,67 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 export const CardContext  = React.createContext();
 
 const Provider = (props) => {
-  const [cardState, setCardState] = useState([
-    {
-      id: 1,
-      caption: 'One',
-      text: 'first.',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 2,
-      caption: 'Two',
-      text: 'second',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 3,
-      caption: 'Three',
-      text: 'third',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 4,
-      caption: 'Four',
-      text: 'fourth',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 5,
-      caption: 'Five',
-      text: 'Fifth',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 6,
-      caption: 'Six',
-      text: 'sixth',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 7,
-      caption: 'Seven',
-      text: 'seventh',
-      checked: false,
-      edited: false
-    },
-    {
-      id: 8,
-      caption: 'Caption',
-      text: 'Text...',
-      checked: false,
-      edited: false
-    }
-  ]);
+
+  const [cardState, setCardState] = useState([]);
+
+  useEffect(() => {
+    axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
+      .then(response => {
+        let cards = response.data.slice(0, 15).map(card => {
+          return {
+            id: card.Number,
+            caption: card.Name,
+            text: card.About,
+            checked: false,
+            edited: false
+          }
+        });
+        setCardState(cards);
+      });
+  }, [setCardState]);
 
   function checkboxChange(id) {
     const cardIndex = cardState.findIndex(c => c.id === id);
@@ -113,8 +74,8 @@ const Provider = (props) => {
   function addCard() {
     const cardNew = {
       id: uuidv4(),
-      caption: '',
-      text: '',
+      caption: 'Header',
+      text: 'Body',
       checked: false,
       edited: false
     };

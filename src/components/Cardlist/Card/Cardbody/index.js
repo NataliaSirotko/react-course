@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import './index.css';
 
 const CardBody = (props) => {
+    let text = props.text.slice(0, 90) + '...';
     return props.edit ? <textarea onChange={(event) => props.handler(event, 'text')} value={props.value}></textarea>
-    : <p>{props.text}</p>;
+    : <p>{text}</p>;
 }
 
 CardBody.propTypes = {
