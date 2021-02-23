@@ -11,16 +11,14 @@ const Provider = (props) => {
   useEffect(() => {
     axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
       .then(response => {
-        let cards = response.data.slice(0, 15).map(card => {
-          return {
+        setCardState(
+          response.data.slice(0, 15).map(card => ({
             id: card.Number,
             caption: card.Name,
             text: card.About,
             checked: false,
             edited: false
-          }
-        });
-        setCardState(cards);
+          })));
       });
   }, [setCardState]);
 
