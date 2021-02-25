@@ -1,13 +1,11 @@
 .header {
     text-align: center;
     border: 2px solid blue;
+    margin-bottom: 20px;
 }
 
 .header button {
     background-color: pink;
-    letter-spacing: 1px;
-    position: relative;
-    left: 400px;
 }
 
 span.badge {
@@ -16,4 +14,27 @@ span.badge {
     padding: 3px 6px;
     border-radius: 4px;
     margin-left: 5px;
+}
+.header nav {
+    display: flex;
+    justify-content: space-around;
+}
+.header nav ul li {
+    display: inline-block;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: green;
+    cursor: pointer;
+}
+.header nav ul li:hover {
+    background-color: #339933;
+}
+.header nav ul li:active {
+    background-color: green;
+    transform: translateY(2px) translateX(2px);
+}
+.header a {
+    color: white;
+    text-decoration: none;
 }

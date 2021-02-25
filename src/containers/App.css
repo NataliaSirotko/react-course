@@ -1,18 +1,12 @@
-label {
-    margin-left: 50px;
-}
-main {
-    margin-top: 20px;
-}
 button {
     padding: 15px 20px;
-    margin: 0 0 30px 30px;
     background-color: green;
     color: white;
     border: none;
     border-radius: 10px;
     outline: none;
     cursor: pointer;
+    letter-spacing: 1px;
 }
 button:hover {
     background-color: #339933;
@@ -21,8 +15,3 @@ button:active {
     background-color: green;
     transform: translateY(2px) translateX(2px);
 }
-.cardblock {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
