@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import withLoadingDelay from '../../hoc/WithLoadingDelay';
 
 const Auth = (props) => (
     <form className="auth">
@@ -14,4 +15,4 @@ const Auth = (props) => (
     </form>
 );
 
-export default Auth;
+export default withLoadingDelay(Auth);
