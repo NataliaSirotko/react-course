@@ -5,6 +5,7 @@ import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import Provider from './context/Card-context';
 import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
 
 axios.interceptors.request.use(request => request,
   error => {
@@ -22,9 +23,11 @@ axios.interceptors.request.use(response => response,
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

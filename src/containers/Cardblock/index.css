@@ -1,0 +1,11 @@
+.block label {
+    margin-left: 50px;
+}
+.cardblock {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.block button {
+    margin: 0 0 30px 30px;
+}

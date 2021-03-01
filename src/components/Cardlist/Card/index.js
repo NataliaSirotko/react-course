@@ -8,7 +8,7 @@ import { MdCancel } from 'react-icons/md';
 import CardHeader from './Cardheader';
 import CardBody from './Cardbody';
 
-import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 import Aux from '../../../hoc/Auxiliary';
 
 const Card = (props) => {
