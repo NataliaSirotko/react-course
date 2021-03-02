@@ -9,7 +9,7 @@ const Auth = (props) => {
             username: {
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Enter email'
+                    title: 'Enter email'
                 },
                 value: '',
                 validation: {
@@ -22,7 +22,7 @@ const Auth = (props) => {
             password: {
                 elementConfig: {
                     type: 'password',
-                    placeholder: 'Enter min 8 symbols (min 1 digit and 1 letter)'
+                    title: 'Enter min 8 symbols (min 1 digit and 1 letter)'
                 },
                 value: '',
                 validation: {

@@ -11,7 +11,7 @@ const Input = (props) => {
         <div>
             <label>{props.label[0].toUpperCase() + props.label.slice(1)}</label>
             <input className={invalidClass} {...props.elementConfig}
-                value={props.value} onChange={props.changed} pattern={props.pattern} />
+                value={props.value} onChange={props.changed} />
         </div>
 )};
 
