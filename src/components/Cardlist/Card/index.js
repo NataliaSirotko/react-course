@@ -11,6 +11,10 @@ import CardBody from './Cardbody';
 import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 import Aux from '../../../hoc/Auxiliary';
 
+import { connect } from 'react-redux';
+import * as actionCreators from '../../../store/actions';
+import { withRouter } from "react-router-dom";
+
 const Card = (props) => {
 
     let cardClass = classNames('card', {
@@ -22,7 +26,7 @@ const Card = (props) => {
     });
 
     function editing() {
-      props.onEditMode(props.data.id);
+      props.onEditMode(props.cards, props.data.id);
       setCachedState({
         cachedCard: {
           ...props.data
@@ -39,22 +43,26 @@ const Card = (props) => {
     }
 
     function saveEditing() {
-      props.onSave(cachedState.cachedCard, props.data.id);
+      props.onSaveEditing(props.cards, cachedState.cachedCard, props.data.id);
       setCachedState({
         cachedCard: {}
       });
     }
 
     function cancelEditing() {
-      props.onCancel(props.data.id);
+      props.onCancelEditing(props.cards, props.data.id);
       setCachedState({
         cachedCard: {}
       });
     }
 
+    function toCardPage() {
+      props.history.push('/card/:' + props.data.id);
+    }
+
     return (
       <Aux>
-        <div className={cardClass}>
+        <div className={cardClass} onDoubleClick={props.checkboxMain ? toCardPage : undefined}>
         <p>
           <CardHeader
             value={cachedState.cachedCard.caption}
@@ -66,7 +74,7 @@ const Card = (props) => {
             {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
             : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
             {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
-            : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
+            : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.cards, props.data.id)} />}
           </span>
         </p>
         <CardBody
@@ -84,4 +92,18 @@ Card.propTypes = {
   data: PropTypes.object
 };
 
-export default withLoadingDelay(Card);
+const mapStatetoProps = state => {
+  return {
+    cards: state.cards
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCheckboxChange: (cards, id) => dispatch(actionCreators.checkboxChange(cards, id)),
+    onEditMode: (cards, id) => dispatch(actionCreators.editMode(cards, id)),
+    onSaveEditing: (cards, arr, id) => dispatch(actionCreators.saveEditing(cards, arr, id)),
+    onCancelEditing: (cards, id) => dispatch(actionCreators.cancelEditing(cards, id))
+  }
+}
+export default connect(mapStatetoProps, mapDispatchToProps) (withRouter(withLoadingDelay(Card)));
