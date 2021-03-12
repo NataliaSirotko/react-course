@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import './App.css';
 import Cardblock from './Cardblock';
 import Header from '../components/Header';
@@ -12,18 +12,22 @@ const Auth = React.lazy(() => import('../components/Auth'));
 
 function App(props) {
 
-  useEffect(() => {
-    props.onInit();
-  }, []);
+  const [mount, setMount] = useState(false);
 
-  useEffect(props.onInit);
+  useEffect(() => {
+    if (!mount) {
+      setMount(true);
+      props.onInit();
+    }
+  }, [props, mount]);
+
   return (
     <div className="App">
       <Header cards={props.cards} />
       <Switch>
         <Route path="/auth" render={() => <Suspense fallback={<div>...Loading</div>}> <Auth /> </Suspense> } />
         <Route path="/" exact component={Cardblock} />
-        <Route path={"/card/:id"} component={CardPage} />
+        <Route path="/card/:id" component={CardPage} />
         <Route component={PageNotFound} />
       </Switch>
     </div>

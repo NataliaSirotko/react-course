@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './index.css';
 import CardList from '../../components/Cardlist';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 
 const Checkbox = styled.input`
@@ -45,8 +45,11 @@ const Cardblock = (props) => {
       checked: false
     });
 
+    const cards = useSelector(state => state.cards);
+    const dispatch = useDispatch();
+
     function mainChecked() {
-      props.cards.forEach(c => {
+      cards.forEach(c => {
         return c.edited = false;
       });
       setState({
@@ -62,25 +65,25 @@ const Cardblock = (props) => {
             <div className="cardblock">
                 <CardList
                   checkboxMain={state.checked}
-                  cards={props.cards} />
+                  cards={cards} />
             </div>
-            <button type="text" onClick={() => props.onDeleteCards(props.cards)}>Удалить выбранные карточки</button>
-            <button type="text" onClick={() => props.onAddCard(props.cards)}>Создать карточку</button>
+            <button type="text" onClick={() => dispatch(actionCreators.deleteCards(cards))}>Удалить выбранные карточки</button>
+            <button type="text" onClick={() => dispatch(actionCreators.addCard(cards))}>Создать карточку</button>
         </div>
       );
 };
 
-const mapStatetoProps = state => {
-  return {
-    cards: state.cards
-  }
-}
+// const mapStatetoProps = state => {
+//   return {
+//     cards: state.cards
+//   }
+// }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onDeleteCards: (cards) => dispatch(actionCreators.deleteCards(cards)),
-    onAddCard: (cards) => dispatch(actionCreators.addCard(cards))
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onDeleteCards: (cards) => dispatch(actionCreators.deleteCards(cards)),
+//     onAddCard: (cards) => dispatch(actionCreators.addCard(cards))
+//   }
+// }
 
-export default connect(mapStatetoProps, mapDispatchToProps) (Cardblock);
+export default  (Cardblock);

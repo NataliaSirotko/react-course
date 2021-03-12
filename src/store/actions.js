@@ -28,19 +28,6 @@ export function init() {
                       edited: false
                     }));
       dispatch(start(result));
-
-      // console.log(response.data.slice(0,15));
-      // dispatch({
-      //   type: INIT,
-      //   payload: response.data.slice(0, 15).map(card => ({
-      //     id: card.Number,
-      //     caption: card.Name,
-      //     text: card.About,
-      //     checked: false,
-      //     edited: false
-      //   }))
-      // })
-
     });
   }
 }
