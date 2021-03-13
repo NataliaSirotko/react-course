@@ -73,17 +73,4 @@ const Cardblock = (props) => {
       );
 };
 
-// const mapStatetoProps = state => {
-//   return {
-//     cards: state.cards
-//   }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onDeleteCards: (cards) => dispatch(actionCreators.deleteCards(cards)),
-//     onAddCard: (cards) => dispatch(actionCreators.addCard(cards))
-//   }
-// }
-
 export default  (Cardblock);
