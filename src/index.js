@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
-import Provider from './context/Card-context';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './store/reducer';
 
 axios.interceptors.request.use(request => request,
   error => {
@@ -21,13 +24,28 @@ axios.interceptors.request.use(response => response,
   }
 );
 
+const logger = store => {
+  return next => {
+    return action => {
+      console.log('middleware', action);
+      const result = next(action);
+      console.log(store.getState())
+      return result;
+    }
+  }
+};
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(logger, thunk)));
+
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <BrowserRouter>
-      <Provider>
         <App />
-      </Provider>
     </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

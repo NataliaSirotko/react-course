@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './index.css';
-import { CardContext } from '../../context/Card-context';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
-    const {addCounter} = useContext(CardContext);
 
     return (
     <div className="header">
@@ -16,7 +14,7 @@ const Header = (props) => {
             </ul>
             <div>
                 <button type="button">
-                    Количество карточек <span className="badge">{addCounter()}</span>
+                    Количество карточек <span className="badge">{props.cards.length}</span>
                 </button>
             </div>
         </nav>

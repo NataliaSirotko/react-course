@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import CardList from '../../components/Cardlist';
 import styled from 'styled-components';
-import { CardContext } from '../../context/Card-context';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 
 const Checkbox = styled.input`
   -webkit-appearance: none;
@@ -44,10 +45,11 @@ const Cardblock = (props) => {
       checked: false
     });
 
-    const {cardState, deleteCards, addCard} = useContext(CardContext);
+    const cards = useSelector(state => state.cards);
+    const dispatch = useDispatch();
 
     function mainChecked() {
-      cardState.forEach(c => {
+      cards.forEach(c => {
         return c.edited = false;
       });
       setState({
@@ -61,12 +63,27 @@ const Cardblock = (props) => {
                 <Checkbox type="checkbox" checked={state.checked} onChange={mainChecked} />
             </label>
             <div className="cardblock">
-                <CardList checkboxMain={state.checked} />
+                <CardList
+                  checkboxMain={state.checked}
+                  cards={cards} />
             </div>
-            <button type="text" onClick={deleteCards}>Удалить выбранные карточки</button>
-            <button type="text" onClick={addCard}>Создать карточку</button>
+            <button type="text" onClick={() => dispatch(actionCreators.deleteCards(cards))}>Удалить выбранные карточки</button>
+            <button type="text" onClick={() => dispatch(actionCreators.addCard(cards))}>Создать карточку</button>
         </div>
       );
 };
 
-export default Cardblock;
+// const mapStatetoProps = state => {
+//   return {
+//     cards: state.cards
+//   }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onDeleteCards: (cards) => dispatch(actionCreators.deleteCards(cards)),
+//     onAddCard: (cards) => dispatch(actionCreators.addCard(cards))
+//   }
+// }
+
+export default  (Cardblock);

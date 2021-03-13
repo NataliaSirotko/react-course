@@ -11,6 +11,10 @@ import CardBody from './Cardbody';
 import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 import Aux from '../../../hoc/Auxiliary';
 
+import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../../../store/actions';
+import { withRouter } from "react-router-dom";
+
 const Card = (props) => {
 
     let cardClass = classNames('card', {
@@ -21,8 +25,11 @@ const Card = (props) => {
         cachedCard: {}
     });
 
+    const cards = useSelector(state => state.cards);
+    const dispatch = useDispatch();
+
     function editing() {
-      props.onEditMode(props.data.id);
+      dispatch(actionCreators.editMode(cards, props.data.id));
       setCachedState({
         cachedCard: {
           ...props.data
@@ -39,22 +46,26 @@ const Card = (props) => {
     }
 
     function saveEditing() {
-      props.onSave(cachedState.cachedCard, props.data.id);
+      dispatch(actionCreators.saveEditing(cards, cachedState.cachedCard, props.data.id));
       setCachedState({
         cachedCard: {}
       });
     }
 
     function cancelEditing() {
-      props.onCancel(props.data.id);
+      dispatch(actionCreators.cancelEditing(cards, props.data.id));
       setCachedState({
         cachedCard: {}
       });
     }
 
+    function toCardPage() {
+      props.history.push('/card/:' + props.data.id);
+    }
+
     return (
       <Aux>
-        <div className={cardClass}>
+        <div className={cardClass} onDoubleClick={props.checkboxMain ? toCardPage : undefined}>
         <p>
           <CardHeader
             value={cachedState.cachedCard.caption}
@@ -66,7 +77,7 @@ const Card = (props) => {
             {props.data.edited ? <span onClick={saveEditing}><IoIosSave /></span>
             : (props.checkboxMain ? null : <span onClick={editing}><AiOutlineEdit /></span>)}
             {props.data.edited ? <span onClick={cancelEditing}><MdCancel /></span>
-            : <input type="checkbox" checked={props.data.checked} onChange={() => props.onCheckboxChange(props.data.id)} />}
+            : <input type="checkbox" checked={props.data.checked} onChange={() => dispatch(actionCreators.checkboxChange(cards, props.data.id))} />}
           </span>
         </p>
         <CardBody
@@ -84,4 +95,4 @@ Card.propTypes = {
   data: PropTypes.object
 };
 
-export default withLoadingDelay(Card);
+export default withRouter(withLoadingDelay(Card));
