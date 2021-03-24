@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './store/reducer';
+import logger from './utils/middleware';
 
 axios.interceptors.request.use(request => request,
   error => {
@@ -23,17 +24,6 @@ axios.interceptors.request.use(response => response,
     Promise.reject(error)
   }
 );
-
-const logger = store => {
-  return next => {
-    return action => {
-      console.log('[Middleware] dispatching', action);
-      const result = next(action);
-      console.log('[Middleware] next state', store.getState())
-      return result;
-    }
-  }
-};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
