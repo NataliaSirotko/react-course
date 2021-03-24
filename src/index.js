@@ -27,9 +27,9 @@ axios.interceptors.request.use(response => response,
 const logger = store => {
   return next => {
     return action => {
-      console.log('middleware', action);
+      console.log('[Middleware] dispatching', action);
       const result = next(action);
-      console.log(store.getState())
+      console.log('[Middleware] next state', store.getState())
       return result;
     }
   }

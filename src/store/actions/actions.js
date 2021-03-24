@@ -1,17 +1,10 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-
-export const INIT = 'INIT';
-export const CHECKBOX_CHANGE = 'CHECKBOX_CHANGE';
-export const EDIT_MODE = 'EDIT_MODE';
-export const SAVE_EDITING = 'SAVE_EDITING';
-export const CANCEL_EDITING = 'CANCEL_EDITING';
-export const DELETE_CARDS = 'DELETE_CARDS';
-export const ADD_CARD = 'ADD_CARD';
+import * as actionTypes from './actionTypes';
 
 export function start(cardState) {
   return {
-    type: INIT,
+    type: actionTypes.INIT,
     payload: cardState
   };
 };
@@ -42,7 +35,7 @@ export function checkboxChange(cardState, id) {
   cards[cardIndex] = card;
 
   return {
-      type: CHECKBOX_CHANGE,
+      type: actionTypes.CHECKBOX_CHANGE,
       payload: cards
   }
 }
@@ -56,7 +49,7 @@ export function editMode(cardState, id) {
   const cards = [...cardState];
   cards[cardIndex] = card;
   return {
-    type: EDIT_MODE,
+    type: actionTypes.EDIT_MODE,
     payload: cards
   }
 }
@@ -69,7 +62,7 @@ export function saveEditing(cardState, arr, id) {
   const cards = [...cardState];
   cards[cardIndex] = card;
   return {
-    type: SAVE_EDITING,
+    type: actionTypes.SAVE_EDITING,
     payload: cards
   }
 }
@@ -82,7 +75,7 @@ export function cancelEditing(cardState, id) {
   const cards = [...cardState];
   cards[cardIndex] = card;
   return {
-    type: CANCEL_EDITING,
+    type: actionTypes.CANCEL_EDITING,
     payload: cards
   }
 }
@@ -90,7 +83,7 @@ export function cancelEditing(cardState, id) {
 export function deleteCards(cardState) {
   const cardsNew = cardState.filter(c => !c.checked);
   return {
-    type: DELETE_CARDS,
+    type: actionTypes.DELETE_CARDS,
     payload: cardsNew
   }
 }
@@ -106,7 +99,7 @@ export function addCard(cardState) {
   };
   cards = cards.concat(cardNew);
   return {
-    type: ADD_CARD,
+    type: actionTypes.ADD_CARD,
     payload: cards
   }
 }

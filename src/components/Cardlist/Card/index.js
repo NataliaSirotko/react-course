@@ -12,7 +12,7 @@ import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 import Aux from '../../../hoc/Auxiliary';
 
 import { useDispatch, useSelector } from 'react-redux';
-import * as actionCreators from '../../../store/actions';
+import * as actionCreators from '../../../store/actions/actions';
 import { withRouter } from "react-router-dom";
 
 const Card = (props) => {

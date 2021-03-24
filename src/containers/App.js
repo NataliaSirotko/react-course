@@ -1,29 +1,26 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import './App.css';
 import Cardblock from './Cardblock';
 import Header from '../components/Header';
 import { Route, Switch } from 'react-router-dom';
 import PageNotFound from '../components/PageNotFound';
-import { connect } from 'react-redux';
-import * as actionCreators from '../store/actions';
+import * as actionCreators from '../store/actions/actions';
 import CardPage from '../components/CardPage';
-
+import { useSelector, useDispatch } from 'react-redux';
 const Auth = React.lazy(() => import('../components/Auth'));
 
 function App(props) {
 
-  const [mount, setMount] = useState(false);
+  const cards = useSelector(state => state.cards);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!mount) {
-      setMount(true);
-      props.onInit();
-    }
-  }, [props, mount]);
+    dispatch(actionCreators.init());
+  }, [dispatch]);
 
   return (
     <div className="App">
-      <Header cards={props.cards} />
+      <Header cards={cards} />
       <Switch>
         <Route path="/auth" render={() => <Suspense fallback={<div>...Loading</div>}> <Auth /> </Suspense> } />
         <Route path="/" exact component={Cardblock} />
@@ -34,16 +31,4 @@ function App(props) {
   );
 }
 
-const mapStatetoProps = state => {
-  return {
-    cards: state.cards
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onInit: () => dispatch(actionCreators.init())
-  }
-}
-
-export default connect(mapStatetoProps, mapDispatchToProps) (App);
+export default App;
