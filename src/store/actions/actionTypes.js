@@ -5,3 +5,4 @@ export const SAVE_EDITING = 'SAVE_EDITING';
 export const CANCEL_EDITING = 'CANCEL_EDITING';
 export const DELETE_CARDS = 'DELETE_CARDS';
 export const ADD_CARD = 'ADD_CARD';
+export const MAIN_CHECKED = 'MAIN_CHECKED';

@@ -11,7 +11,7 @@ const withLoadingDelay = (WrappedComponent) => {
             }, 2000);
 
             return () => clearTimeout(timer);
-        }, []);
+        }, [setContent]);
 
         return content ? <WrappedComponent {...props} />
         : <div className='card' style={{border: 'none'}} ><img style={{width: '70px', display: 'block', margin: 'auto'}} src={preloader} alt="loader"></img></div>

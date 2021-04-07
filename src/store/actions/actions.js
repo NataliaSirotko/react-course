@@ -103,3 +103,18 @@ export function addCard(cardState) {
     payload: cards
   }
 }
+
+export function mainChecked(mainState) {
+  const state = mainState;
+  state.checked = !state.checked;
+  state.checked ? localStorage.setItem('viewMode', 'true') : localStorage.removeItem('viewMode');
+
+  state.cards.forEach(c => {
+    return c.edited = false;
+  });
+
+  return {
+    type: actionTypes.MAIN_CHECKED,
+    payload: state
+  }
+}

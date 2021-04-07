@@ -24,3 +24,10 @@ form h3 {
 .auth button:disabled {
     cursor: not-allowed;
 }
+.auth Input {
+    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    background-color: #e8eeef;
+    border-radius: 5px;
+}
