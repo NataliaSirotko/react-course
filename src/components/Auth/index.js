@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './index.css';
 import withLoadingDelay from '../../hoc/WithLoadingDelay';
 import Input from '../UI/Input';
+import { loginSuccess } from '../../store/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from "react-router-dom";
 
 const Auth = (props) => {
     const [authState, setAuthState] = useState({
@@ -62,6 +65,9 @@ const Auth = (props) => {
         setAuthState({authForm: updatedAuthForm, formIsValid: formIsValid});
     }
 
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.auth.user);
+
     function formHandler(event) {
         event.preventDefault();
         const formData = {};
@@ -69,6 +75,9 @@ const Auth = (props) => {
             formData[formElemId] = authState.authForm[formElemId].value;
         }
         console.log(formData);
+
+        dispatch(loginSuccess(formData));
+        //window.location.assign('/');
     }
 
     function checkValidity(value, rules) {
@@ -84,6 +93,12 @@ const Auth = (props) => {
         }
 
         return isValid;
+    }
+
+    if (user) {
+        return (
+            <Redirect to={'/'} />
+        )
     }
 
     return (

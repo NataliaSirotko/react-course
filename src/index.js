@@ -6,9 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import reducer from './store/reducer';
+import mainReducer from './store/main';
+import logger from './utils/middleware';
+import authReducer from './store/auth';
 
 axios.interceptors.request.use(request => request,
   error => {
@@ -24,16 +26,7 @@ axios.interceptors.request.use(response => response,
   }
 );
 
-const logger = store => {
-  return next => {
-    return action => {
-      console.log('[Middleware] dispatching', action);
-      const result = next(action);
-      console.log('[Middleware] next state', store.getState())
-      return result;
-    }
-  }
-};
+const reducer = combineReducers({main: mainReducer, auth: authReducer});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

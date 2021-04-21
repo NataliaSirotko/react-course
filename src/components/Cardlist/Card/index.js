@@ -25,7 +25,7 @@ const Card = (props) => {
         cachedCard: {}
     });
 
-    const cards = useSelector(state => state.cards);
+    const cards = useSelector(state => state.main.cards);
     const dispatch = useDispatch();
 
     function editing() {
@@ -61,11 +61,12 @@ const Card = (props) => {
 
     function toCardPage() {
       props.history.push('/card/:' + props.data.id);
+
     }
 
     return (
       <Aux>
-        <div className={cardClass} onDoubleClick={props.checkboxMain ? toCardPage : undefined}>
+        <div className={cardClass} onDoubleClick={toCardPage}>
         <p>
           <CardHeader
             value={cachedState.cachedCard.caption}

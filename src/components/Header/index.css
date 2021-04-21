@@ -1,7 +1,6 @@
 .header {
     text-align: center;
     border: 2px solid blue;
-    margin-bottom: 20px;
 }
 
 .header button {
@@ -37,4 +36,7 @@ span.badge {
 .header a {
     color: white;
     text-decoration: none;
+}
+.header h2 {
+    color: blue;
 }
