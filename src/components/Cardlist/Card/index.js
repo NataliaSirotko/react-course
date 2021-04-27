@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from '../../../store/actions/actions';
 import { withRouter } from "react-router-dom";
 
-const Card = (props) => {
+export const Card = (props) => {
 
     let cardClass = classNames('card', {
         'card-checked': props.data.checked
