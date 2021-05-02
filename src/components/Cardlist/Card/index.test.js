@@ -1,62 +1,61 @@
-import React from "react";
-import { configure, shallow, mount } from 'enzyme';
+import React, { useState } from "react";
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Card from './index';
 import CardHeader from './Cardheader';
 import { IoIosSave } from 'react-icons/io';
 import { AiOutlineEdit } from 'react-icons/ai';
-import * as redux from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Aux from '../../../hoc/Auxiliary';
 
 configure({adapter: new Adapter()});
 
-// jest
-//     .spyOn(redux, 'useSelector')
-//     .mockReturnValueOnce('first call');
-
 const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
+    ...jest.requireActual('react-redux'),
+   useSelector: jest.fn(),
+   useDispatch: () => mockDispatch
 }));
 
-let setState = jest.fn();
-let mockSelector = jest.spyOn(redux, 'useSelector');
+const mockSetState = jest.fn();
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: jest.fn()
+}));
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: () => ({
+      push: jest.fn()
+    })
+}));
 
 describe('<Card />', () => {
-
     let wrapper;
     let props = {
         data: {
-            edited: false
+            edited: true,
+            checked: false
         }
     };
+    const mockAppState = jest.fn();
 
     beforeEach(() => {
+        const mockedDispatch = jest.fn();
+        useSelector.mockImplementation(callback => callback(mockAppState));
+        mockDispatch.mockReturnValue(mockedDispatch);
+        //useDispatch.mockReturnValue(mockedDispatch);
         wrapper = shallow(<Card {...props} />);
-        const user = {
-            id: 1,
-            name: 'User',
-          };
-
-        const state = { user };
-
-        const useStateSpy = jest.spyOn(React, 'useState');
-        useStateSpy.mockImplementation(init => [init, setState]);
-
-        // const mockedDispatch = jest.fn();
-    // useDispatch.mockReturnValue(mockedDispatch);
-        mockSelector.mockImplementation((selectorFn) => selectorFn(state));
-
+        //wrapper.classList.add('card');
+        useState.mockImplementation(initial => [initial, mockSetState]);
     });
 
-    it('should', () => {
-        expect(setState).toHaveBeenCalledTimes(1);
+    it('renders', () => {
+        expect(mockSetState).toHaveBeenCalledTimes(1);
     });
 
-    it('loads data on init', () => {
-        expect(mockSelector).toHaveBeenCalledTimes(1);
-    });
-
-    it('loads data on init', () => {
+    it('should render', () => {
+        //expect(wrapper.find(CardHeader)).toHaveLength(1);
         expect(mockDispatch).toHaveBeenCalledTimes(1);
     });
 
@@ -71,11 +70,15 @@ describe('<Card />', () => {
     it('should render <IoIosSave /> element if edited', () => {
         props = {
             data: {
-                edited: true
+                edited: true,
+                checked: false
             }
         };
         //wrapper.setProps({edited: true});
         expect(wrapper.find(IoIosSave)).toHaveLength(1);
     });
 
+    afterEach(() => {
+        useSelector.mockClear();
+    });
 });

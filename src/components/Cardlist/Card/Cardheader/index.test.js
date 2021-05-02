@@ -7,21 +7,31 @@ configure({adapter: new Adapter()});
 
 describe('<CardHeader />', () => {
     let wrapper;
+    let mockHandler = jest.fn();
+    let props = {
+        edit: true,
+        handler: mockHandler
+    };
     beforeEach(() => {
-        wrapper = shallow(<CardHeader />);
+        wrapper = shallow(<CardHeader {...props} />);
     });
 
     it('should contain elem', () => {
-       expect(wrapper.find('span')).toHaveLength(1);
+        wrapper.setProps({edit: false});
+        expect(wrapper.find('span')).toHaveLength(1);
     });
 
     it('should contain elem', () => {
-        wrapper.setProps({edit: true});
         expect(wrapper.find('input')).toHaveLength(1);
     });
 
+    it('should simulate onChange handler', () => {
+        wrapper.find('input').simulate('change');
+        expect(mockHandler).toHaveBeenCalledTimes(1);
+    });
+
     it('should contain textContent', () => {
-        wrapper.setProps({caption: 'kk'});
+        wrapper.setProps({edit: false, caption: 'kk'});
         expect(wrapper.find('span').text()).toEqual('kk');
     });
 });

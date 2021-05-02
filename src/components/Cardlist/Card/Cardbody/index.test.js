@@ -8,17 +8,26 @@ configure({adapter: new Adapter()});
 describe('<CardBody />', () => {
 
     let wrapper;
+    let mockHandler = jest.fn();
+    let props = {
+        text: 'pp',
+        edit: true,
+        handler: mockHandler
+    }
     beforeEach(() => {
-        wrapper = shallow(<CardBody text='pp' />);
+        wrapper = shallow(<CardBody {...props} />);
     });
 
     it('should contain element', () => {
-        wrapper.setProps({edit: true});
         expect(wrapper.find('textarea')).toHaveLength(1);
     });
+
     it('should contain element', () => {
-        //wrapper.setProps({edit: false});
-        //expect(wrapper.contains(<p>pp</p>)).toEqual(true);
+        wrapper.setProps({edit: false});
         expect(wrapper.find('p')).toHaveLength(1);
+    });
+    it('should simulate onChange handler', () => {
+        wrapper.find('textarea').simulate('change');
+        expect(mockHandler).toHaveBeenCalledTimes(1);
     });
 });
