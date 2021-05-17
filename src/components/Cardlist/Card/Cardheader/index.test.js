@@ -1,6 +1,6 @@
 import React from "react";
 import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from 'enzyme-adapter-react-17-updated';
 import CardHeader from './index';
 
 configure({adapter: new Adapter()});

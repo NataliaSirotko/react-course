@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import Card from './index';
+import Adapter from 'enzyme-adapter-react-17-updated';
+import { PureCard as Card } from './index';
 import CardHeader from './Cardheader';
 import { IoIosSave } from 'react-icons/io';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
-import Aux from '../../../hoc/Auxiliary';
 
 configure({adapter: new Adapter()});
 
@@ -45,7 +44,7 @@ describe('<Card />', () => {
         useSelector.mockImplementation(callback => callback(mockAppState));
         mockDispatch.mockReturnValue(mockedDispatch);
         //useDispatch.mockReturnValue(mockedDispatch);
-        wrapper = shallow(<Card {...props} />);
+        wrapper = shallow(<Card {...props}></Card>);
         //wrapper.classList.add('card');
         useState.mockImplementation(initial => [initial, mockSetState]);
     });
