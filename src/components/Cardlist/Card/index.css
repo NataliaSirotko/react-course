@@ -7,7 +7,7 @@
     color: green;
     overflow: auto;
   }
-  .card p:first-child {
+  .card > p:first-child {
     height: auto;
     padding-bottom: 10px;
     border-bottom: 1px solid red;

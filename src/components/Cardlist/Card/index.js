@@ -13,7 +13,7 @@ import Aux from '../../../hoc/Auxiliary';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from '../../../store/actions/actions';
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Card = (props) => {
 
@@ -27,6 +27,7 @@ const Card = (props) => {
 
     const cards = useSelector(state => state.main.cards);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     function editing() {
       dispatch(actionCreators.editMode(cards, props.data.id));
@@ -60,8 +61,7 @@ const Card = (props) => {
     }
 
     function toCardPage() {
-      props.history.push('/card/:' + props.data.id);
-
+      history.push('/card/:' + props.data.id);
     }
 
     return (
@@ -96,4 +96,5 @@ Card.propTypes = {
   data: PropTypes.object
 };
 
-export default withRouter(withLoadingDelay(Card));
+export default withLoadingDelay(Card);
+export { Card as PureCard };
